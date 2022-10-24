@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Open API Test</title>
+<script type="text/javascript" src="/vendor/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var jwtValue = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.ZSOd64x_FnuHR18Aj5_N0ODtfONidzQfgQykBunk3tc";
+	
+	$(".btn").on("click", function(e) {
+		$.ajax({
+        	beforeSend: function(request) {
+            	request.setRequestHeader("Authorization", 'Bearer ' + jwtValue);	// jwtValue는 JWT값
+        	},
+        	dataType: "json",
+        	url: 'http://localhost:8080/notes/all',
+        	data: { mid: 10 },
+        	success: function(arr) {
+            	console.log(arr);
+            	$("span").text(arr[0].title);
+        	}
+        });
+	});
+});
+</script>
+</head>
+<body>
+<h1>Open API Test</h1>
+<p>노트를 가져오기 위하여 아래 버튼을 클릭하세요.</p>
+<button class="btn">요청하기</button>
+<p>결과 : <span></span></p>
+</body>
+</html>
